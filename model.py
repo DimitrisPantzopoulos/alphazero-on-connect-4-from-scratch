@@ -39,8 +39,12 @@ def column_full(board : np.ndarray, column : int) -> bool:
     """Return True if `column` has no empty rows left."""
     return bool(np.count_nonzero(board[:, column] == 0) == 0)
 
-# Step 5 - valid_moves (not yet solved)
-# TODO: implement
+# Step 5 - valid_moves
+def valid_moves(board : np.ndarray) -> np.ndarray:
+    # Return a list of column indices that still have at least one empty row
+    return np.where(
+        np.array([not column_full(board, col) for col in range(7)])
+    )[0].tolist()
 
 # Step 6 - four_in_a_row_horizontal (not yet solved)
 # TODO: implement

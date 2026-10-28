@@ -20,8 +20,17 @@ def column_top_row(board : np.ndarray, column : int) -> int:
     """Return the lowest empty row in `column`, or -1 if the column is full."""
     return (board.shape[0] - 1) - int(np.count_nonzero(board[:, column]))
 
-# Step 3 - drop_piece (not yet solved)
-# TODO: implement
+# Step 3 - drop_piece
+def drop_piece(board : np.ndarray, column : int, player : int) -> np.ndarray:
+    # TODO: place `player` in the lowest empty row of `column` and return the new board
+    landing_row : int = column_top_row(board, column)
+
+    if landing_row == -1: raise ValueError('Column is full cannot place mark.') 
+
+    new_board = board.copy()
+    new_board[landing_row, column] = player
+
+    return new_board
 
 # Step 4 - column_full (not yet solved)
 # TODO: implement

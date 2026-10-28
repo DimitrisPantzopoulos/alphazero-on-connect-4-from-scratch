@@ -184,8 +184,23 @@ def board_to_torch_tensor(board : np.ndarray, current_player : int) -> torch.Ten
     # Encode the board and return it as a float32 torch tensor of shape (1, 2, 6, 7).
     return torch.from_numpy(encode_board(board, current_player)).unsqueeze(0)
 
-# Step 17 - init_conv_backbone (not yet solved)
-# TODO: implement
+# Step 17 - init_conv_backbone
+import torch.nn as nn
+
+def init_conv_backbone(
+        in_channels     : int = 2, 
+        hidden_channels : int = 16
+    ) -> nn.Sequential:
+
+    # Build a small convolutional backbone preserving the 6x7 spatial shape.
+    return nn.Sequential(
+        nn.Conv2d(in_channels, hidden_channels, kernel_size=3, padding=1),
+        nn.ReLU(),
+        nn.Conv2d(hidden_channels, hidden_channels, kernel_size=3, padding=1),
+        nn.ReLU(),
+        nn.Conv2d(hidden_channels, hidden_channels, kernel_size=3, padding=1),
+        nn.ReLU(),
+    )
 
 # Step 18 - init_policy_head (not yet solved)
 # TODO: implement

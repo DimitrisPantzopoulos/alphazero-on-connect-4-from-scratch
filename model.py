@@ -103,8 +103,32 @@ def four_in_a_row_diagonal_up_right(board : np.ndarray) -> int:
 
     return int(first[wins][0]) if np.any(wins) else 0
 
-# Step 10 - check_winner (not yet solved)
-# TODO: implement
+# Step 10 - check_winner
+import numpy as np
+
+def check_winner(board : np.ndarray) -> int:
+    """Return 1 or 2 if that player has four in a row, else 0."""
+    
+    horizontal : int = four_in_a_row_horizontal(board)
+
+    if horizontal != 0:
+        return horizontal
+
+    vertical : int = four_in_a_row_vertical(board)
+
+    if vertical != 0:
+        return vertical
+
+    down_right : int = four_in_a_row_diagonal_down_right(board)
+
+    if down_right != 0:
+        return down_right
+
+    up_right : int = four_in_a_row_diagonal_up_right(board)
+
+    if up_right != 0:
+        return up_right
+    return 0
 
 # Step 11 - board_is_full (not yet solved)
 # TODO: implement

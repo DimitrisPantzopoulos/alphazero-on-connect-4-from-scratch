@@ -143,8 +143,10 @@ def is_terminal(board : np.ndarray) -> tuple[bool, int]:
 
     return (done, winner)
 
-# Step 13 - other_player (not yet solved)
-# TODO: implement
+# Step 13 - other_player
+def other_player(player : int) -> int:
+    # return the opponent's player code (1 <-> 2)
+    return 2 if player == 1 else 1
 
 # Step 14 - step_env (not yet solved)
 # TODO: implement

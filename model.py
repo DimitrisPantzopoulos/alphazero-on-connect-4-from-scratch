@@ -135,8 +135,13 @@ def board_is_full(board : np.ndarray) -> bool:
     # Return True when no column has an empty slot left
     return bool(np.all(board[0, :] != 0))
 
-# Step 12 - is_terminal (not yet solved)
-# TODO: implement
+# Step 12 - is_terminal
+def is_terminal(board : np.ndarray) -> tuple[bool, int]:
+    # return (done, winner) using check_winner and board_is_full.
+    winner : int  = check_winner(board)
+    done   : bool = board_is_full(board) or (winner != 0)
+
+    return (done, winner)
 
 # Step 13 - other_player (not yet solved)
 # TODO: implement

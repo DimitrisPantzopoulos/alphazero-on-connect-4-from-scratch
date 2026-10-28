@@ -46,8 +46,20 @@ def valid_moves(board : np.ndarray) -> np.ndarray:
         np.array([not column_full(board, col) for col in range(7)])
     )[0].tolist()
 
-# Step 6 - four_in_a_row_horizontal (not yet solved)
-# TODO: implement
+# Step 6 - four_in_a_row_horizontal
+def four_in_a_row_horizontal(board : np.ndarray) -> int:
+    # scan every row for four consecutive matching non-zero pieces horizontally
+
+    first : np.ndarray = board[:, :-3]
+
+    wins = (
+        (first != 0)
+        & (first == board[:, 1:-2])
+        & (first == board[:, 2:-1])
+        & (first == board[:, 3:])
+    )
+
+    return int(first[wins][0]) if np.any(wins) else 0
 
 # Step 7 - four_in_a_row_vertical (not yet solved)
 # TODO: implement

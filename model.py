@@ -177,8 +177,12 @@ def encode_board(board : np.ndarray, current_player : int) -> np.ndarray:
 
     return encoding
 
-# Step 16 - board_to_torch_tensor (not yet solved)
-# TODO: implement
+# Step 16 - board_to_torch_tensor
+import torch
+
+def board_to_torch_tensor(board : np.ndarray, current_player : int) -> torch.Tensor:
+    # Encode the board and return it as a float32 torch tensor of shape (1, 2, 6, 7).
+    return torch.from_numpy(encode_board(board, current_player)).unsqueeze(0)
 
 # Step 17 - init_conv_backbone (not yet solved)
 # TODO: implement

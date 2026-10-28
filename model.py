@@ -75,8 +75,19 @@ def four_in_a_row_vertical(board : np.ndarray) -> int:
 
     return int(first[wins][0]) if np.any(wins) else 0
 
-# Step 8 - four_in_a_row_diagonal_down_right (not yet solved)
-# TODO: implement
+# Step 8 - four_in_a_row_diagonal_down_right
+def four_in_a_row_diagonal_down_right(board : np.ndarray) -> int:
+    # TODO: scan every down-right diagonal of the 6x7 board for four matching non-zero pieces
+    first = board[:-3, :-3]
+
+    wins = (
+        (first != 0)
+        & (first == board[1:-2, 1:-2])
+        & (first == board[2:-1, 2:-1])
+        & (first == board[3:,   3:])
+    )
+
+    return int(first[wins][0]) if np.any(wins) else 0
 
 # Step 9 - four_in_a_row_diagonal_up_right (not yet solved)
 # TODO: implement

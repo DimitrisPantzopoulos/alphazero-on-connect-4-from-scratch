@@ -148,8 +148,21 @@ def other_player(player : int) -> int:
     # return the opponent's player code (1 <-> 2)
     return 2 if player == 1 else 1
 
-# Step 14 - step_env (not yet solved)
-# TODO: implement
+# Step 14 - step_env
+def step_env(
+        board  : np.ndarray, 
+        column : int, 
+        player : int
+    ) -> tuple[np.ndarray, bool, int, int]:
+    # Drop piece for player, then return (new_board, done, winner, next_player).
+    
+    new_board : np.ndarray = drop_piece(board, column, player)
+
+    done, winner = is_terminal(new_board)
+
+    player : int = other_player(player)
+
+    return new_board, done, winner, player
 
 # Step 15 - encode_board (not yet solved)
 # TODO: implement

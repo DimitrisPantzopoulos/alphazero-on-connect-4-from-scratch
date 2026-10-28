@@ -18,7 +18,7 @@ import numpy as np
 
 def column_top_row(board : np.ndarray, column : int) -> int:
     """Return the lowest empty row in `column`, or -1 if the column is full."""
-    return 5 - np.count_nonzero(board[:, column])
+    return (board.shape[0] - 1) - int(np.count_nonzero(board[:, column]))
 
 # Step 3 - drop_piece (not yet solved)
 # TODO: implement

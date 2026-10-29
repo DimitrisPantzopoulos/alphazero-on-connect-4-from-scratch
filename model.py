@@ -236,8 +236,31 @@ def init_value_head(
         nn.Tanh(),
     )
 
-# Step 20 - build_policy_value_net (not yet solved)
-# TODO: implement
+# Step 20 - build_policy_value_net
+import torch
+import torch.nn as nn
+
+def build_policy_value_net(
+    in_channels     : int = 2, 
+    hidden_channels : int = 16, 
+    num_columns     : int = 7
+    ) -> nn.Module:
+    """Compose backbone + policy head + value head into one nn.Module."""
+    # Build an nn.Module with backbone, policy_head, value_head attributes
+    class AlphaZero(nn.Module):
+        def __init__(self) -> None:
+            super().__init__()
+
+            self.backbone    : nn.Sequential = init_conv_backbone(in_channels, hidden_channels)
+            self.policy_head : nn.Sequential = init_policy_head(hidden_channels, num_columns)
+            self.value_head  : nn.Sequential = init_value_head(hidden_channels)
+        
+        def forward(self, x : torch.Tensor) -> tuple[torch.Tensor, torch.Tensor]:
+            x = self.backbone(x)
+
+            return self.policy_head(x), self.value_head(x)
+            
+    return AlphaZero()
 
 # Step 21 - policy_value_forward (not yet solved)
 # TODO: implement

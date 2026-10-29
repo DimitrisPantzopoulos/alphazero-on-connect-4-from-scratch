@@ -262,8 +262,14 @@ def build_policy_value_net(
             
     return AlphaZero()
 
-# Step 21 - policy_value_forward (not yet solved)
-# TODO: implement
+# Step 21 - policy_value_forward
+import torch
+import torch.nn as nn
+
+def policy_value_forward(net, encoded_board : torch.Tensor) -> tuple[torch.Tensor, torch.Tensor]:
+    """Run encoded_board (B,2,6,7) through net and return (logits, value)."""
+    # Call the network on the encoded board and return its two outputs
+    return net.forward(encoded_board)
 
 # Step 22 - action_mask (not yet solved)
 # TODO: implement

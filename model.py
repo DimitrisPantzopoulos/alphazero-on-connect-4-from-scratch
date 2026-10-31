@@ -271,8 +271,17 @@ def policy_value_forward(net, encoded_board : torch.Tensor) -> tuple[torch.Tenso
     # Call the network on the encoded board and return its two outputs
     return net.forward(encoded_board)
 
-# Step 22 - action_mask (not yet solved)
-# TODO: implement
+# Step 22 - action_mask
+import numpy as np
+
+def action_mask(board : np.ndarray) -> np.ndarray:
+    legal_moves : np.ndarray = valid_moves(board)
+
+    legal_mask : np.ndarray = np.zeros((7, ), dtype=np.bool)
+
+    legal_mask[legal_moves] = 1
+
+    return legal_mask
 
 # Step 23 - masked_policy_logits (not yet solved)
 # TODO: implement

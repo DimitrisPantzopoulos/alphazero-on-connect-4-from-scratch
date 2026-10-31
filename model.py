@@ -283,8 +283,26 @@ def action_mask(board : np.ndarray) -> np.ndarray:
 
     return legal_mask
 
-# Step 23 - masked_policy_logits (not yet solved)
-# TODO: implement
+# Step 23 - masked_policy_logits
+import torch
+
+def masked_policy_logits(
+        logits : torch.Tensor, 
+        mask   : torch.Tensor,
+    ) -> torch.Tensor:
+    """
+    Set logits at illegal columns to -inf.
+
+    logits: torch.Tensor of shape (..., 7)
+    mask:   bool array/tensor of shape (7,), True = legal
+    returns: torch.Tensor of same shape as logits
+    """
+    
+    return torch.where(
+        torch.as_tensor(mask, dtype=torch.bool),
+        logits,
+        float('-inf')
+    )
 
 # Step 24 - masked_log_softmax (not yet solved)
 # TODO: implement

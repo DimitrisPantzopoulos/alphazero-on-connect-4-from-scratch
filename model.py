@@ -401,8 +401,20 @@ def select_best_child(
 
     return best_action, best_child
 
-# Step 31 - select_leaf (not yet solved)
-# TODO: implement
+# Step 31 - select_leaf
+def select_leaf(
+        root   : dict, 
+        c_puct : float
+    ) -> dict:
+    # TODO: walk down the MCTS tree picking the best PUCT child until a non-expanded node is reached
+    node : dict = root
+
+    while node['is_expanded']:
+        legal_moves : list[int] = list(node['children'].keys())
+
+        _, node = select_best_child(node, legal_moves, c_puct)
+
+    return node
 
 # Step 32 - evaluate_with_network (not yet solved)
 # TODO: implement

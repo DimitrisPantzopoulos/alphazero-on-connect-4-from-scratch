@@ -416,8 +416,31 @@ def select_leaf(
 
     return node
 
-# Step 32 - evaluate_with_network (not yet solved)
-# TODO: implement
+# Step 32 - evaluate_with_network
+def evaluate_with_network(
+    net,
+    state: np.ndarray,
+    to_play: int,
+) -> tuple[np.ndarray, float]:
+
+    net.eval()
+
+    with torch.no_grad():
+        board_encoding = board_to_torch_tensor(state, to_play)
+        policy_logits, value = policy_value_forward(net, board_encoding)
+
+        mask = torch.as_tensor(
+            action_mask(state),
+            dtype=torch.bool,
+            device=policy_logits.device,
+        )
+
+        log_priors = masked_log_softmax(policy_logits, mask)
+
+        priors = log_priors.exp().squeeze(0).cpu().numpy()
+        value = value.item()
+
+        return priors, value
 
 # Step 33 - expand_node (not yet solved)
 # TODO: implement

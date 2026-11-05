@@ -524,8 +524,28 @@ def run_mcts(
     
     return root
 
-# Step 37 - visit_count_policy (not yet solved)
-# TODO: implement
+# Step 37 - visit_count_policy
+def visit_count_policy(
+        root        : dict, 
+        temperature : float = 1.0
+    ) -> np.ndarray:
+
+    counts = np.zeros(7, dtype=np.float64)
+    
+    for idx, child in root['children'].items():
+        counts[idx] = child['visit_count']
+
+    if counts.sum() == 0:
+        return np.full(7, 1.0 / 7, dtype=np.float64)
+
+    if temperature < 1e-3:
+        policy = np.zeros(7, dtype=np.float64)
+        policy[np.argmax(counts)] = 1.0
+        return policy
+
+    scaled = counts / counts.max()
+    temp_dist = np.power(scaled, 1.0 / temperature)
+    return temp_dist / temp_dist.sum()
 
 # Step 38 - mcts_choose_action (not yet solved)
 # TODO: implement

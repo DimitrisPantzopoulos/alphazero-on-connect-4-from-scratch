@@ -364,7 +364,8 @@ def make_mcts_node(
         "visit_count" : 0,
         "value_sum"   : 0.0,
         "children"    : {},
-        "parent"      : parent
+        "parent"      : parent,
+        "is_expanded" : False
     }
 
 # Step 28 - node_q_value
@@ -485,16 +486,13 @@ def run_one_simulation(
         net, 
         c_puct,
     ) -> None:
-    # Run one MCTS simulation: select a leaf, evaluate, expand if non-terminal, backup.
     node = select_leaf(root, c_puct)
 
-    # 2. Determine the value of this leaf.
     done, winner = is_terminal(node["board"])
 
     if done:
-        # Assumes players are +1 / -1 and draws are 0 or None.
         if winner is None or winner == 0:
-            value = 0.0
+            value = 0.0  # Draw
         else:
             value = 1.0 if winner == node["to_play"] else -1.0
     else:
@@ -503,11 +501,8 @@ def run_one_simulation(
             node["board"],
             node["to_play"],
         )
-
-        # 3. Create children with the network's move priors.
         expand_node(node, priors)
 
-    # 4. Update this node and its ancestors.
     backup_value(node, value)
 
 # Step 36 - run_mcts (not yet solved)

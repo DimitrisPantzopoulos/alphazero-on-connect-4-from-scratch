@@ -465,8 +465,19 @@ def expand_node(
 
     node['is_expanded'] = True
 
-# Step 34 - backup_value (not yet solved)
-# TODO: implement
+# Step 34 - backup_value
+def backup_value(
+        leaf  : dict, 
+        value : float
+    ) -> None:
+    # TODO: walk from leaf up through parents, updating visit_count and value_sum with alternating signs
+    if leaf is None:
+        return
+
+    leaf['visit_count'] += 1
+    leaf['value_sum']   += value
+
+    backup_value(leaf.get('parent', None), -value)
 
 # Step 35 - run_one_simulation (not yet solved)
 # TODO: implement

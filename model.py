@@ -442,8 +442,28 @@ def evaluate_with_network(
 
         return priors, value
 
-# Step 33 - expand_node (not yet solved)
-# TODO: implement
+# Step 33 - expand_node
+def expand_node(
+        node   : dict, 
+        priors : np.ndarray,
+    ) -> None:
+    # TODO: attach a child node for every legal move with the corresponding network prior
+    legal_moves : list[int] = valid_moves(node['board'])
+
+    for legal_move in legal_moves:
+        # Make the MCTS Node and add it to children with the corresponding prior
+        child : dict = make_mcts_node(priors[legal_move], node)
+
+        # Add the board to the node
+        child['board'] = drop_piece(
+            node['board'].copy(), legal_move, node['to_play']
+        )
+
+        child["to_play"] = other_player(node["to_play"])
+
+        node["children"][legal_move] = child
+
+    node['is_expanded'] = True
 
 # Step 34 - backup_value (not yet solved)
 # TODO: implement

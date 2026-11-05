@@ -409,7 +409,7 @@ def select_leaf(
     # TODO: walk down the MCTS tree picking the best PUCT child until a non-expanded node is reached
     node : dict = root
 
-    while node['is_expanded']:
+    while node.get('is_expanded', False):
         legal_moves : list[int] = list(node['children'].keys())
 
         _, node = select_best_child(node, legal_moves, c_puct)
@@ -479,8 +479,36 @@ def backup_value(
 
     backup_value(leaf.get('parent', None), -value)
 
-# Step 35 - run_one_simulation (not yet solved)
-# TODO: implement
+# Step 35 - run_one_simulation
+def run_one_simulation(
+        root, 
+        net, 
+        c_puct,
+    ) -> None:
+    # Run one MCTS simulation: select a leaf, evaluate, expand if non-terminal, backup.
+    node = select_leaf(root, c_puct)
+
+    # 2. Determine the value of this leaf.
+    done, winner = is_terminal(node["board"])
+
+    if done:
+        # Assumes players are +1 / -1 and draws are 0 or None.
+        if winner is None or winner == 0:
+            value = 0.0
+        else:
+            value = 1.0 if winner == node["to_play"] else -1.0
+    else:
+        priors, value = evaluate_with_network(
+            net,
+            node["board"],
+            node["to_play"],
+        )
+
+        # 3. Create children with the network's move priors.
+        expand_node(node, priors)
+
+    # 4. Update this node and its ancestors.
+    backup_value(node, value)
 
 # Step 36 - run_mcts (not yet solved)
 # TODO: implement

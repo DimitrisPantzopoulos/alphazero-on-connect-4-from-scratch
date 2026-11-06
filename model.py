@@ -547,8 +547,29 @@ def visit_count_policy(
     temp_dist = np.power(scaled, 1.0 / temperature)
     return temp_dist / temp_dist.sum()
 
-# Step 38 - mcts_choose_action (not yet solved)
-# TODO: implement
+# Step 38 - mcts_choose_action
+def mcts_choose_action(
+        state, 
+        to_play, 
+        net, 
+        num_simulations, 
+        c_puct, 
+        temperature=1.0
+    ) -> tuple[int, np.ndarray]:
+    # Run MCTS at the given state and return (action, visit-count policy vector).
+    root : dict = run_mcts(state, to_play, net, num_simulations, c_puct)
+
+    policy_distribution : torch.Tensor = torch.from_numpy(visit_count_policy(
+        root, temperature
+    ))
+
+    mask : torch.Tensor = torch.from_numpy(
+        action_mask(state)
+    )
+
+    return sample_action_from_policy(
+        policy_distribution, mask, temperature
+    ), policy_distribution.numpy()
 
 # Step 39 - record_self_play_step (not yet solved)
 # TODO: implement

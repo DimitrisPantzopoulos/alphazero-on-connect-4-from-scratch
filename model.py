@@ -615,8 +615,22 @@ def play_self_play_game(
 
     return history, winner
 
-# Step 41 - assign_value_targets (not yet solved)
-# TODO: implement
+# Step 41 - assign_value_targets
+def assign_value_targets(
+        history, 
+        winner
+    ):
+    # Return a new list of step dicts each annotated with a 'value' target in {-1.0, 0.0, 1.0}.
+    entries = [entry.copy() for entry in history]
+
+    for entry in entries:
+        entry['value'] = (
+            0.0 if winner == 0
+            else 1.0 if winner == entry['to_play']
+            else -1.0
+        )
+
+    return entries
 
 # Step 42 - generate_self_play_batch (not yet solved)
 # TODO: implement

@@ -602,7 +602,7 @@ def play_self_play_game(
     done    = is_terminal(board)
     winner  = None
 
-    while done and winner is None:
+    while done:
         action, policy = mcts_choose_action(
             board, to_play, net, num_simulations, c_puct, temperature
         )
@@ -610,8 +610,6 @@ def play_self_play_game(
         record_self_play_step(history, board, policy, to_play)
 
         board, done, winner, to_play = step_env(board, action, to_play)
-
-        to_play = other_player(to_play)
 
     return history, winner
 
@@ -632,8 +630,22 @@ def assign_value_targets(
 
     return entries
 
-# Step 42 - generate_self_play_batch (not yet solved)
-# TODO: implement
+# Step 42 - generate_self_play_batch
+def generate_self_play_batch(
+        net, 
+        num_games, 
+        num_simulations, 
+        c_puct, 
+        temperature=1.0
+    ):
+    # TODO: play num_games self-play games and return a flat list of labelled step dicts.
+    return [
+        step
+        for _ in range(num_games)
+        for step in assign_value_targets(
+            *play_self_play_game(net, num_simulations, c_puct, temperature)
+        )
+    ]
 
 # Step 43 - value_loss_mse (not yet solved)
 # TODO: implement
